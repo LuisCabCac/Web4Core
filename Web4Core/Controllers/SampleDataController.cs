@@ -28,19 +28,7 @@ namespace Web4Core.Controllers
             });
         }
 
-        [HttpGet("[action]")]
-        public IEnumerable<DocumentType> Documents()
-        {
-            List<DocumentType> documents = null;
-            using (var db = new CmsContext())
-            {
-                 documents = db.DocumentTypes
-                    .Where(b => b.Title != "")
-                    .ToList();
-            }
-            return documents;
-        }
-public class WeatherForecast
+        public class WeatherForecast
         {
             public string DateFormatted { get; set; }
             public int TemperatureC { get; set; }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using CMS4A4.Model.Content;
+using Web4Core.Implements.Documents;
 
 namespace Web4Core.Controllers
 {
@@ -11,36 +9,25 @@ namespace Web4Core.Controllers
     [Route("api/Document")]
     public class DocumentController : Controller
     {
-        // GET: api/Document
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        private readonly IDocumentManager documentManager;
+
+        DocumentController(IDocumentManager documentManager)
         {
-            return new string[] { "value1", "value2" };
+            this.documentManager = documentManager;
         }
 
-        // GET: api/Document/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("[action]/{title}")]
+        public IEnumerable<DocumentType> GetDocuments(string title)
         {
-            return "value";
+            return documentManager.GetListByTitle(title);
         }
-        
-        // POST: api/Document
-        [HttpPost]
-        public void Post([FromBody]string value)
+
+
+        [HttpPost("[action]")]
+        public void SaveDocuments(DocumentType document)
         {
-        }
-        
-        // PUT: api/Document/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            documentManager.SaveDocument(document);
         }
     }
 }
